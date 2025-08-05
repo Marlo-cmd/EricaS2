@@ -1,0 +1,294 @@
+/*
+ * Script JavaScript para o Site Romântico Interativo
+ *
+ * Este script gerencia as interações do usuário, as animações de partículas,
+ * os elogios flutuantes e a música de fundo.
+ *
+ * AUTOR: [Wilson/@codebywil - WFSB]
+ * DATA: [02-07-2025]
+ */
+
+// -----------------------------------------------------
+// REFERÊNCIAS DOS ELEMENTOS HTML
+// -----------------------------------------------------
+
+const interactiveParticlesCanvas = document.getElementById('interactiveParticles');
+const ctx = interactiveParticlesCanvas.getContext('2d'); // Contexto 2D para desenhar no canvas
+const interactionMessage = document.getElementById('interactionMessage');
+const mainText = document.getElementById('mainText');
+const backgroundMusic = document.getElementById('backgroundMusic');
+const backgroundHeartContainer = document.getElementById('backgroundHeartContainer'); // Contêiner para corações de fundo
+const clickEffectContainer = document.getElementById('clickEffectContainer'); // Contêiner para os elogios do clique
+
+let clickParticles = []; // Array para armazenar as partículas geradas ao clicar/tocar no texto principal
+
+// -----------------------------------------------------
+// LISTA DE ELOGIOS E MENSAGENS
+// Modifique estas listas com suas próprias palavras e frases!
+// -----------------------------------------------------
+
+// Lista de palavras elogiosas que aparecem ao clicar/tocar em qualquer lugar da tela
+// Adicione ou remova palavras conforme desejar. Tente ter pelo menos 50 elogios únicos.
+const praiseWords = [
+    "Magnífica", "Radiante", "Deslumbrante", "Encantadora", "Brilhante",
+    "Estrela", "Sua", "Cativante", "Incrível", "Perfeita",
+    "Amável", "Doce", "Gentil", "Inteligente", "Dedicada",
+    "Única", "Fascinante", "Preciosa", "Inspiradora", "Sonho",
+    "Maravilhosa", "Querida", "Especial", "Luz", "Sorriso",
+    "Cachos", "Dourados", "Morena", "Beleza", "Alma",
+    "Calma", "Meiga", "Viva", "Real", "Paz",
+    "Minha", "Tesouro", "Paixão", "Desejo", "Coração",
+    "Sensível", "Graciosa", "Pura", "Verdadeira", "Alegria",
+    "Simples", "Linda", "Divertida", "Harmonia", "Gostosa", "Deliciosa", "Amor",
+    "Completa", "Espetacular", "Dona do meu olhar", "Amor da minha vida", "Irresistível",
+    "Adorável", "Vibrante", "Luminosa", "Confiante", "Misteriosa", "Carinhosa"
+];
+
+// Mensagens românticas que caem como "chuva" no fundo da tela
+// Adicione ou remova frases aqui.
+const backgroundRomanticMessages = [
+  "Meu amor por você é puro!",
+  "Você é a estrela mais linda!",
+  "Minha inspiração!",
+  "Sua presença me encanta!",
+  "Nosso amor é mágico!",
+  "Sorriso que me desarma!",
+  "Você é perfeita!",
+  "Um presente para mim!",
+  "Minha joia rara!",
+  "Com você sou mais feliz!",
+  "Sua alma é um jardim!",
+  "Cabelos de anjo!",
+  "Seus olhos me hipnotizam!"
+];
+
+// -----------------------------------------------------
+// FUNÇÕES DE CONFIGURAÇÃO E REDIMENSIONAMENTO
+// -----------------------------------------------------
+
+/**
+ * Redimensiona o canvas para preencher toda a tela, garantindo responsividade.
+ */
+function resizeCanvas() {
+  interactiveParticlesCanvas.width = window.innerWidth;
+  interactiveParticlesCanvas.height = window.innerHeight;
+}
+
+// Ouve o evento de redimensionamento da janela para ajustar o canvas
+window.addEventListener('resize', resizeCanvas);
+// Chama a função uma vez no carregamento inicial da página
+resizeCanvas();
+
+// -----------------------------------------------------
+// EFEITO: PARTÍCULAS DE CLIQUE NO TEXTO PRINCIPAL ("Clique aqui ❤")
+// -----------------------------------------------------
+
+/**
+ * Cria um conjunto de partículas que se espalham a partir de um ponto.
+ * Usado quando o usuário clica/toca no texto principal.
+ * @param {number} x - Coordenada X do clique/toque.
+ * @param {number} y - Coordenada Y do clique/toque.
+ */
+function createClickParticles(x, y) {
+  for (let i = 0; i < 25; i++) { // Cria 25 partículas por clique
+    clickParticles.push({
+      x,
+      y,
+      size: Math.random() * 6 + 3, // Tamanho aleatório das partículas
+      speedX: (Math.random() - 0.5) * 7, // Velocidade horizontal aleatória (pode ir para esquerda ou direita)
+      speedY: (Math.random() - 0.5) * 7, // Velocidade vertical aleatória (pode ir para cima ou para baixo)
+      alpha: 1 // Opacidade inicial (totalmente visível)
+    });
+  }
+}
+
+/**
+ * Anima as partículas criadas, movendo-as e diminuindo sua opacidade até desaparecerem.
+ */
+function animateClickParticles() {
+  ctx.clearRect(0, 0, interactiveParticlesCanvas.width, interactiveParticlesCanvas.height); // Limpa o canvas a cada frame
+  clickParticles.forEach((p, i) => {
+    p.x += p.speedX; // Atualiza a posição X
+    p.y += p.speedY; // Atualiza a posição Y
+    p.alpha -= 0.03; // Diminui a opacidade para criar o efeito de desaparecimento
+    if (p.alpha <= 0) {
+      clickParticles.splice(i, 1); // Remove a partícula do array se ela estiver invisível
+    } else {
+      ctx.fillStyle = `rgba(255, 160, 180, ${p.alpha})`; // Cor rosa suave com a opacidade atual
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); // Desenha um círculo
+      ctx.fill(); // Preenche o círculo
+    }
+  });
+  requestAnimationFrame(animateClickParticles); // Solicita o próximo frame de animação
+}
+animateClickParticles(); // Inicia o loop de animação das partículas de clique
+
+// -----------------------------------------------------
+// EFEITO: CORAÇÕES FLUTUANTES DE FUNDO
+// -----------------------------------------------------
+
+/**
+ * Cria um coração (elemento HTML) que flutua do fundo para o topo da tela.
+ */
+function createBackgroundFloatingHeart() {
+  const heart = document.createElement('span');
+  heart.classList.add('background-floating-heart');
+  heart.innerHTML = '❤'; // Caractere de coração (você pode usar um ícone ou imagem se preferir)
+  heart.style.left = Math.random() * window.innerWidth + 'px'; // Posição horizontal aleatória
+  heart.style.bottom = '-50px'; // Começa abaixo da tela
+  heart.style.fontSize = (20 + Math.random() * 20) + 'px'; // Tamanho aleatório para variação
+  // Define uma variável CSS personalizada para o offset horizontal da flutuação, criando movimento variado
+  heart.style.setProperty('--float-offset', `${(Math.random() - 0.5) * 200}px`);
+
+  backgroundHeartContainer.appendChild(heart); // Adiciona o coração ao contêiner específico
+
+  // Remove o coração do DOM após a conclusão de sua animação para otimização
+  heart.addEventListener('animationend', () => {
+    heart.remove();
+  });
+}
+// Cria um novo coração de fundo a cada 300 milissegundos (você pode ajustar este intervalo)
+setInterval(createBackgroundFloatingHeart, 300);
+
+// -----------------------------------------------------
+// EFEITO: PARTÍCULAS CINTILANTES DE FUNDO
+// -----------------------------------------------------
+
+/**
+ * Cria uma partícula cintilante (div) que aparece em uma posição aleatória no fundo.
+ */
+function createSparkleParticle() {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle-particle');
+    const size = Math.random() * 8 + 4; // Tamanho aleatório para a partícula
+    sparkle.style.width = `${size}px`;
+    sparkle.style.height = `${size}px`;
+    sparkle.style.left = `${Math.random() * window.innerWidth}px`; // Posição horizontal aleatória
+    sparkle.style.top = `${Math.random() * window.innerHeight}px`; // Posição vertical aleatória
+    sparkle.style.animationDuration = `${Math.random() * 4 + 3}s`; // Duração da animação aleatória
+    sparkle.style.animationDelay = `${Math.random() * 2}s`; // Atraso na animação para que apareçam em momentos diferentes
+
+    document.body.appendChild(sparkle); // Adiciona a partícula diretamente ao body
+
+    // Remove a partícula do DOM após a conclusão de sua animação
+    sparkle.addEventListener('animationend', () => {
+        sparkle.remove();
+    });
+}
+// Cria novas partículas cintilantes a cada 150 milissegundos
+setInterval(createSparkleParticle, 150);
+
+// -----------------------------------------------------
+// EFEITO: MENSAGENS ROMÂNTICAS DE FUNDO ("CHUVA" de texto)
+// -----------------------------------------------------
+
+/**
+ * Cria um elemento de texto que "cai" da parte superior da tela.
+ */
+function createBackgroundTextRain() {
+  const textElement = document.createElement('div');
+  textElement.classList.add('background-text-rain');
+  // Seleciona uma mensagem aleatória da lista 'backgroundRomanticMessages'
+  const randomText = backgroundRomanticMessages[Math.floor(Math.random() * backgroundRomanticMessages.length)];
+  textElement.innerText = randomText;
+  textElement.style.left = Math.random() * window.innerWidth + 'px'; // Posição horizontal aleatória
+  textElement.style.animationDuration = (10 + Math.random() * 8) + 's'; // Duração da queda aleatória
+  textElement.style.fontSize = (20 + Math.random() * 12) + 'px'; // Tamanho da fonte aleatório
+  document.body.appendChild(textElement); // Adiciona o elemento de texto ao body
+  // Remove o elemento de texto após um tempo para otimização
+  setTimeout(() => textElement.remove(), 18000);
+}
+// Cria um novo texto de fundo a cada 400 milissegundos
+setInterval(createBackgroundTextRain, 400);
+
+// -----------------------------------------------------
+// EFEITO: ELOGIOS QUE SOBEM AO CLICAR/TOCAR EM QUALQUER LUGAR DA TELA
+// -----------------------------------------------------
+
+/**
+ * Cria um elemento com uma palavra de elogio que sobe e desaparece.
+ * Usado quando o usuário clica/toca em qualquer lugar da tela (exceto o mainText).
+ * @param {number} x - Coordenada X do clique/toque.
+ * @param {number} y - Coordenada Y do clique/toque.
+ */
+function createClickPraiseWord(x, y) {
+    const wordElement = document.createElement('span');
+    wordElement.classList.add('click-effect-word');
+    // Seleciona uma palavra de elogio aleatória da lista 'praiseWords'
+    const randomIndex = Math.floor(Math.random() * praiseWords.length);
+    wordElement.innerText = praiseWords[randomIndex];
+    wordElement.style.left = `${x}px`; // Posição X baseada no clique
+    wordElement.style.top = `${y}px`; // Posição Y baseada no clique
+
+    clickEffectContainer.appendChild(wordElement); // Adiciona o elogio ao contêiner específico
+
+    // Remove o elogio do DOM após a conclusão de sua animação
+    wordElement.addEventListener('animationend', () => {
+        wordElement.remove();
+    });
+}
+
+// -----------------------------------------------------
+// GERENCIAMENTO DE EVENTOS DE INTERAÇÃO
+// -----------------------------------------------------
+
+// Listener global para cliques em qualquer lugar da tela
+document.addEventListener('click', e => {
+    // Verifica se o clique NÃO foi no elemento 'mainText' para evitar efeitos duplicados
+    if (e.target.id !== 'mainText') {
+        createClickPraiseWord(e.clientX, e.clientY); // Cria o elogio flutuante
+    }
+    // Tenta tocar a música de fundo se ela estiver pausada.
+    // Isso ajuda a contornar restrições de autoplay de navegadores.
+    if (backgroundMusic.paused) {
+        backgroundMusic.play().catch(error => console.log("Erro ao tentar tocar música:", error));
+    }
+});
+
+// Listener global para toques em qualquer lugar da tela (para dispositivos móveis)
+document.addEventListener('touchstart', e => {
+    // Itera sobre cada toque registrado
+    for (let touch of e.touches) {
+        // Verifica se o toque NÃO foi no elemento 'mainText'
+        if (touch.target.id !== 'mainText') {
+            createClickPraiseWord(touch.clientX, touch.clientY); // Cria o elogio flutuante
+        }
+    }
+    // Tenta tocar a música de fundo se ela estiver pausada
+    if (backgroundMusic.paused) {
+        backgroundMusic.play().catch(error => console.log("Erro ao tentar tocar música:", error));
+    }
+});
+
+// Interação Principal: Clique no texto "Clique aqui ❤"
+// Este listener é específico para o 'mainText' e exibe a mensagem de instrução.
+mainText.addEventListener('click', () => {
+  interactionMessage.style.opacity = 1; // Torna a mensagem visível
+  // Define um tempo para a mensagem desaparecer automaticamente
+  setTimeout(() => {
+    interactionMessage.style.opacity = 0;
+  }, 2500); // Visível por 2.5 segundos
+});
+
+// Interação Principal: Toque no texto "Clique aqui ❤" (para dispositivos móveis)
+mainText.addEventListener('touchstart', () => {
+  interactionMessage.style.opacity = 1; // Torna a mensagem visível
+  // Define um tempo para a mensagem desaparecer automaticamente
+  setTimeout(() => {
+    interactionMessage.style.opacity = 0;
+  }, 3500); // Visível por 3.5 segundos (um pouco mais para toques)
+});
+
+// -----------------------------------------------------
+// TENTATIVA DE AUTOPLAY DE MÚSICA NO CARREGAMENTO
+// -----------------------------------------------------
+
+// Tenta reproduzir a música automaticamente assim que a página carrega.
+// IMPORTANT: Muitos navegadores modernos bloqueiam o autoplay de áudio
+// até que o usuário interaja com a página (o clique inicial ajuda nisso).
+window.addEventListener('load', () => {
+    backgroundMusic.play().catch(e => {
+        console.log("Reprodução automática de áudio bloqueada. O usuário precisa interagir com a página para a música tocar.", e);
+    });
+});
