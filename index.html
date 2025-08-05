@@ -11,7 +11,7 @@
 #mainText {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 42%;
   transform: translate(-50%, -50%); 
   font-family: 'Pacifico', cursive;
   color: #ff66b2;
@@ -315,18 +315,22 @@ body, html {
   setInterval(createSparkleParticle, 150);
 
   function createBackgroundTextRain() {
-    const textElement = document.createElement('div');
-    textElement.classList.add('background-text-rain');
-    const randomText = backgroundRomanticMessages[Math.floor(Math.random() * backgroundRomanticMessages.length)];
-    textElement.innerText = randomText;
-    textElement.style.left = Math.random() * window.innerWidth + 'px';
-    textElement.style.animationDuration = (10 + Math.random() * 8) + 's';
-    textElement.style.fontSize = (20 + Math.random() * 12) + 'px';
-    document.body.appendChild(textElement);
-    setTimeout(() => textElement.remove(), 18000);
+  const textElement = document.createElement('div');
+  textElement.classList.add('background-text-rain');
+  // Seleciona mensagem aleatória
+  const randomText = backgroundRomanticMessages[Math.floor(Math.random() * backgroundRomanticMessages.length)];
+  textElement.innerText = randomText;
+  // Posição horizontal aleatória
+  textElement.style.left = Math.random() * window.innerWidth + 'px';
+  // Tamanho aleatório
+  textElement.style.fontSize = (20 + Math.random() * 12) + 'px';
+  document.body.appendChild(textElement);
+  // Remove após a animação
+  setTimeout(() => textElement.remove(), 11000); // 10s animação + 1s de margem
+}     // Agora cai uma nova mensagem a cada 1 segundo (1000ms)
+setInterval(createBackgroundTextRain, 1000);
   }
   setInterval(createBackgroundTextRain, 400);
-
   function createClickPraiseWord(x, y) {
     const wordElement = document.createElement('span');
     wordElement.classList.add('click-effect-word');
