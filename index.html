@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💖 Erica & Marlon 💖</title>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">>
 
-  <style>
-    /* Apenas o texto "Clique aqui ❤" */
+<!-- Fonte bonita -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  position: relative;
+}
+
+/* Clique aqui pulsante e centralizado */
 #mainText {
   position: absolute;
   top: 50%;
-  left: 42%;
-  transform: translate(-50%, -50%); 
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: 'Pacifico', cursive;
+  font-size: 40px;
   color: #ff66b2;
   text-shadow: 
     0 0 5px #ff66b2,
@@ -21,7 +34,7 @@
     0 0 20px #ff4d94,
     0 0 40px #ff1a75;
   animation: pulseGlow 2s infinite;
-
+}
 @keyframes pulseGlow {
   0% {
     text-shadow: 
@@ -29,7 +42,7 @@
       0 0 10px #ff4d94,
       0 0 20px #ff4d94,
       0 0 40px #ff1a75;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
   50% {
     text-shadow: 
@@ -37,7 +50,7 @@
       0 0 20px #ff66b2,
       0 0 30px #ff4d94,
       0 0 50px #ff3385;
-    transform: scale(1.05);
+    transform: translate(-50%, -50%) scale(1.05);
   }
   100% {
     text-shadow: 
@@ -45,345 +58,164 @@
       0 0 10px #ff4d94,
       0 0 20px #ff4d94,
       0 0 40px #ff1a75;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
-  /* CSS básico para o layout e animações */
 
-body, html {
-  margin: 0; padding: 0; height: 100%; overflow: hidden;
-  background: #000000; 
-  font-family: 'Pacifico', cursive;
-  position: relative;
-  color: #ff6699;
-}
-
-.background-floating-heart {
-  color: #ff4d94; /* rosa mais forte */
-}
-
-.sparkle-particle {
-  background: #ff80bf; /* rosa claro */
-}
-
+/* Estilo da chuva de mensagens com brilho suave */
 .background-text-rain {
-  color: #ffffff; /* rosa suave para o texto da chuva */
-}
-
-#mainText {
-  color: #ff4d94; /* rosa forte no texto principal */
-}
-
-#interactionMessage {
-  color: #ff66b2; /* rosa para a mensagem */
-}
-
-.click-effect-word {
-  color: #ff66b2; /* rosa para as palavras de elogio */
-}
-
-  @keyframes floatUp {
-    0% { transform: translateX(0) translateY(0); opacity: 1; }
-    100% { transform: translateX(var(--float-offset)) translateY(-120vh); opacity: 0; }
-  }
-
-  .sparkle-particle {
-    position: fixed;
-    background: #ffadc0;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation-name: sparkle;
-    animation-iteration-count: infinite;
-  }
-
-  @keyframes sparkle {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.5); }
-  }
-
-  .background-text-rain {
   position: absolute;
-  top: -50px; /* começa acima da tela */
+  top: -50px;
   color: #ff99cc;
   opacity: 0.8;
-  animation: fallText 10s linear forwards; /* duração da queda */
-  pointer-events: none; /* não interfere no clique */
+  text-shadow: 0 0 5px #ff66b2, 0 0 10px #ff4d94;
+  animation: fallText 10s linear forwards, flicker 2s infinite ease-in-out;
+  pointer-events: none;
   white-space: nowrap;
 }
-
 @keyframes fallText {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(110vh); /* desce até fora da tela */
- }
-  @keyframes rainDown {
-    0% { transform: translateY(-100px); opacity: 1; }
-    100% { transform: translateY(110vh); opacity: 0; }
-  }
-
-  #mainText {
-    position: fixed;
-    top: 40vh;
-    left: 40%;
-    transform: translateX(-50%);
-    font-size: 3rem;
-    color: #ff1a75;
-    cursor: pointer;
-    z-index: 2;
-    user-select: none;
-  }
-
-  #interactionMessage {
-    position: fixed;
-    top: 50vh;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5rem;
-    color: #ff4081;
-    opacity: 0;
-    transition: opacity 0.5s;
-    z-index: 3;
-  }
-
-  #clickEffectContainer {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 4;
-  }
-
-  .click-effect-word {
-    position: absolute;
-    font-weight: bold;
-    color: #ff4d94;
-    animation: riseUp 1.2s forwards;
-    user-select: none;
-  }
-
-  @keyframes riseUp {
-    0% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-  }
-
+  from { transform: translateY(0); }
+  to { transform: translateY(110vh); }
+}
+@keyframes flicker {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.5; }
+}
 </style>
 </head>
 <body>
 
 <canvas id="interactiveParticles"></canvas>
-
 <div id="backgroundHeartContainer"></div>
-
 <div id="clickEffectContainer"></div>
-
 <div id="mainText">Clique aqui ❤</div>
-<div id="interactionMessage">Aperte Para Descobrir Oque Penso em voce😍</div>
-
-<audio id="backgroundMusic" src="https://github.com/Marlo-cmd/EricaS2/raw/refs/heads/main/assets/musica.mp3.mp3" loop></audio>
+<div id="interactionMessage" style="position:absolute; top:60%; width:100%; text-align:center; opacity:0; color:#fff;">
+  Toque na tela para mais surpresas 💖
+</div>
+<audio id="backgroundMusic" src="assets/musica.mp3" loop></audio>
 
 <script>
-  const interactiveParticlesCanvas = document.getElementById('interactiveParticles');
-  const ctx = interactiveParticlesCanvas.getContext('2d');
-  const interactionMessage = document.getElementById('interactionMessage');
-  const mainText = document.getElementById('mainText');
-  const backgroundMusic = document.getElementById('backgroundMusic');
-  const backgroundHeartContainer = document.getElementById('backgroundHeartContainer');
-  const clickEffectContainer = document.getElementById('clickEffectContainer');
+// ======== SEU CÓDIGO JS ORIGINAL COM AJUSTES ========
 
-  let clickParticles = [];
-// Lista de palavras elogiosas que aparecem ao clicar/tocar em qualquer lugar da tela
-// Adicione ou remova palavras conforme desejar. Tente ter pelo menos 50 elogios únicos.
-  const praiseWords = [
-    "Magnífica", "Radiante", "Deslumbrante", "Encantadora", "Brilhante",
-    "Estrela", "Sua", "Cativante", "Incrível", "Perfeita",
-    "Amável", "Doce", "Gentil", "Inteligente", "Dedicada",
-    "Única", "Fascinante", "Preciosa", "Inspiradora", "Sonho",
-    "Maravilhosa", "Querida", "Especial", "Luz", "Sorriso",
-    "Cachos", "Dourados", "Morena", "Beleza", "Alma",
-    "Calma", "Meiga", "Viva", "Real", "Paz",
-    "Minha", "Tesouro", "Paixão", "Desejo", "Coração",
-    "Sensível", "Graciosa", "Pura", "Verdadeira", "Alegria",
-    "Simples", "Linda", "Divertida", "Harmonia", "Gostosa", "Deliciosa", "Amor",
-    "Completa", "Espetacular", "Dona do meu olhar", "Amor da minha vida", "Irresistível",
-    "Adorável", "Vibrante", "Luminosa", "Confiante", "Misteriosa", "Carinhosa", "Gatinha", "Eri <3",
-    "O teu riso é apaixonante","Já te disse como eu te amo?","Deusa","Fofa",
-  ];
+// Referências
+const interactiveParticlesCanvas = document.getElementById('interactiveParticles');
+const ctx = interactiveParticlesCanvas.getContext('2d');
+const interactionMessage = document.getElementById('interactionMessage');
+const mainText = document.getElementById('mainText');
+const backgroundMusic = document.getElementById('backgroundMusic');
+const backgroundHeartContainer = document.getElementById('backgroundHeartContainer');
+const clickEffectContainer = document.getElementById('clickEffectContainer');
 
-  const backgroundRomanticMessages = [
-    "Meu amor por você é puro!",
-    "Você é a estrela mais linda!",
-    "Minha inspiração!",
-    "Sua presença me encanta!",
-    "Nosso amor é mágico!",
-    "Sorriso que me desarma!",
-    "Você é perfeita!",
-    "Um presente para mim!",
-    "Minha joia rara!",
-    "Com você sou mais feliz!",
-    "Sua alma é um jardim!",
-    "Cabelos de anjo!",
-    "Seus olhos me hipnotizam!",
-    "Você é a minha maior inspiração para ser uma pessoa melhor a cada dia. ❤️",
-    "Você vence todas as dificuldades porque não tem medo de lutar. A sua determinação é o meu combustível.",
-    "E, nos dias difíceis, você é a razão para eu não desistir.",
-    "Desde o primeiro dia que eu te conheci eu soube que você era a pessoa certa",
-    "Você é a mais bela flor desse jardim! 💐",
-    "A tua beleza me impressiona cada dia mais. ❤️",
-    "Olha essa mulher! É a dona do meu coração ❤️",
-    "Eu adoro você exatamente do jeitinho que você é. 💝",
-    "Você é a pessoa que eu esperei a minha vida toda. 😍",
-  ];
+let clickParticles = [];
 
-  // Funções do seu JS aqui (resizeCanvas, createClickParticles, animateClickParticles, etc.)
-  function resizeCanvas() {
-    interactiveParticlesCanvas.width = window.innerWidth;
-    interactiveParticlesCanvas.height = window.innerHeight;
+// Lista de elogios
+const praiseWords = ["Magnífica","Radiante","Deslumbrante","Encantadora","Brilhante","Estrela","Sua","Cativante","Incrível","Perfeita","Amável","Doce","Gentil","Inteligente","Dedicada","Única","Fascinante","Preciosa","Inspiradora","Sonho","Maravilhosa","Querida","Especial","Luz","Sorriso","Cachos","Dourados","Morena","Beleza","Alma","Calma","Meiga","Viva","Real","Paz","Minha","Tesouro","Paixão","Desejo","Coração","Sensível","Graciosa","Pura","Verdadeira","Alegria","Simples","Linda","Divertida","Harmonia","Gostosa","Deliciosa","Amor","Completa","Espetacular","Dona do meu olhar","Amor da minha vida","Irresistível","Adorável","Vibrante","Luminosa","Confiante","Misteriosa","Carinhosa"];
+
+// Mensagens românticas
+const backgroundRomanticMessages = [
+  "Meu amor por você é puro!","Você é a estrela mais linda!","Minha inspiração!","Sua presença me encanta!","Nosso amor é mágico!","Sorriso que me desarma!","Você é perfeita!","Um presente para mim!","Minha joia rara!","Com você sou mais feliz!","Sua alma é um jardim!","Cabelos de anjo!","Seus olhos me hipnotizam!"
+];
+
+// Redimensiona canvas
+function resizeCanvas() {
+  interactiveParticlesCanvas.width = window.innerWidth;
+  interactiveParticlesCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Partículas clique
+function createClickParticles(x, y) {
+  for (let i = 0; i < 25; i++) {
+    clickParticles.push({
+      x, y,
+      size: Math.random() * 6 + 3,
+      speedX: (Math.random() - 0.5) * 7,
+      speedY: (Math.random() - 0.5) * 7,
+      alpha: 1
+    });
   }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  function createClickParticles(x, y) {
-    for (let i = 0; i < 25; i++) {
-      clickParticles.push({
-        x,
-        y,
-        size: Math.random() * 6 + 3,
-        speedX: (Math.random() - 0.5) * 7,
-        speedY: (Math.random() - 0.5) * 7,
-        alpha: 1
-      });
+}
+function animateClickParticles() {
+  ctx.clearRect(0, 0, interactiveParticlesCanvas.width, interactiveParticlesCanvas.height);
+  clickParticles.forEach((p, i) => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.alpha -= 0.03;
+    if (p.alpha <= 0) {
+      clickParticles.splice(i, 1);
+    } else {
+      ctx.fillStyle = `rgba(255, 160, 180, ${p.alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
     }
-  }
+  });
+  requestAnimationFrame(animateClickParticles);
+}
+animateClickParticles();
 
-  function animateClickParticles() {
-    ctx.clearRect(0, 0, interactiveParticlesCanvas.width, interactiveParticlesCanvas.height);
-    clickParticles.forEach((p, i) => {
-      p.x += p.speedX;
-      p.y += p.speedY;
-      p.alpha -= 0.03;
-      if (p.alpha <= 0) {
-        clickParticles.splice(i, 1);
-      } else {
-        ctx.fillStyle = `rgba(255, 160, 180, ${p.alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    });
-    requestAnimationFrame(animateClickParticles);
-  }
-  animateClickParticles();
+// Corações flutuantes
+function createBackgroundFloatingHeart() {
+  const heart = document.createElement('span');
+  heart.classList.add('background-floating-heart');
+  heart.innerHTML = '❤';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.bottom = '-50px';
+  heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+  heart.style.setProperty('--float-offset', `${(Math.random() - 0.5) * 200}px`);
+  backgroundHeartContainer.appendChild(heart);
+  heart.addEventListener('animationend', () => { heart.remove(); });
+}
+setInterval(createBackgroundFloatingHeart, 300);
 
-  function createBackgroundFloatingHeart() {
-    const heart = document.createElement('span');
-    heart.classList.add('background-floating-heart');
-    heart.innerHTML = '❤';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.bottom = '-50px';
-    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
-    heart.style.setProperty('--float-offset', `${(Math.random() - 0.5) * 200}px`);
-    backgroundHeartContainer.appendChild(heart);
-    heart.addEventListener('animationend', () => {
-      heart.remove();
-    });
-  }
-  setInterval(createBackgroundFloatingHeart, 300);
-
-  function createSparkleParticle() {
-    const sparkle = document.createElement('div');
-    sparkle.classList.add('sparkle-particle');
-    const size = Math.random() * 8 + 4;
-    sparkle.style.width = `${size}px`;
-    sparkle.style.height = `${size}px`;
-    sparkle.style.left = `${Math.random() * window.innerWidth}px`;
-    sparkle.style.top = `${Math.random() * window.innerHeight}px`;
-    sparkle.style.animationDuration = `${Math.random() * 4 + 3}s`;
-    sparkle.style.animationDelay = `${Math.random() * 2}s`;
-    document.body.appendChild(sparkle);
-    sparkle.addEventListener('animationend', () => {
-      sparkle.remove();
-    });
-  }
-  setInterval(createSparkleParticle, 150);
-
-  function createBackgroundTextRain() {
+// Mensagens como chuva
+function createBackgroundTextRain() {
   const textElement = document.createElement('div');
   textElement.classList.add('background-text-rain');
-  // Seleciona mensagem aleatória
-  const randomText = backgroundRomanticMessages[Math.floor(Math.random() * backgroundRomanticMessages.length)];
-  textElement.innerText = randomText;
-  // Posição horizontal aleatória
+  textElement.innerText = backgroundRomanticMessages[Math.floor(Math.random() * backgroundRomanticMessages.length)];
   textElement.style.left = Math.random() * window.innerWidth + 'px';
-  // Tamanho aleatório
   textElement.style.fontSize = (20 + Math.random() * 12) + 'px';
   document.body.appendChild(textElement);
-  // Remove após a animação
-  setTimeout(() => textElement.remove(), 11000); // 10s animação + 1s de margem
-}     // Agora cai uma nova mensagem a cada 1 segundo (1000ms)
+  setTimeout(() => textElement.remove(), 11000);
+}
 setInterval(createBackgroundTextRain, 1000);
 
-  setInterval(createBackgroundTextRain, 400);
-  function createClickPraiseWord(x, y) {
-    const wordElement = document.createElement('span');
-    wordElement.classList.add('click-effect-word');
-    const randomIndex = Math.floor(Math.random() * praiseWords.length);
-    wordElement.innerText = praiseWords[randomIndex];
-    wordElement.style.left = `${x}px`;
-    wordElement.style.top = `${y}px`;
-    clickEffectContainer.appendChild(wordElement);
-    wordElement.addEventListener('animationend', () => {
-      wordElement.remove();
-    });
+// Elogios ao clicar
+function createClickPraiseWord(x, y) {
+  const wordElement = document.createElement('span');
+  wordElement.classList.add('click-effect-word');
+  wordElement.innerText = praiseWords[Math.floor(Math.random() * praiseWords.length)];
+  wordElement.style.left = `${x}px`;
+  wordElement.style.top = `${y}px`;
+  clickEffectContainer.appendChild(wordElement);
+  wordElement.addEventListener('animationend', () => { wordElement.remove(); });
+}
+
+document.addEventListener('click', e => {
+  if (e.target.id !== 'mainText') createClickPraiseWord(e.clientX, e.clientY);
+  if (backgroundMusic.paused) backgroundMusic.play().catch(()=>{});
+});
+
+document.addEventListener('touchstart', e => {
+  for (let touch of e.touches) {
+    if (touch.target.id !== 'mainText') createClickPraiseWord(touch.clientX, touch.clientY);
   }
+  if (backgroundMusic.paused) backgroundMusic.play().catch(()=>{});
+});
 
-  document.addEventListener('click', e => {
-    if (e.target.id !== 'mainText') {
-      createClickPraiseWord(e.clientX, e.clientY);
-    }
-    if (backgroundMusic.paused) {
-      backgroundMusic.play().catch(error => console.log("Erro ao tentar tocar música:", error));
-    }
-  });
+mainText.addEventListener('click', () => {
+  interactionMessage.style.opacity = 1;
+  setTimeout(() => { interactionMessage.style.opacity = 0; }, 2500);
+});
+mainText.addEventListener('touchstart', () => {
+  interactionMessage.style.opacity = 1;
+  setTimeout(() => { interactionMessage.style.opacity = 0; }, 3500);
+});
 
-  document.addEventListener('touchstart', e => {
-    for (let touch of e.touches) {
-      if (touch.target.id !== 'mainText') {
-        createClickPraiseWord(touch.clientX, touch.clientY);
-      }
-    }
-    if (backgroundMusic.paused) {
-      backgroundMusic.play().catch(error => console.log("Erro ao tentar tocar música:", error));
-    }
-  });
-
-  mainText.addEventListener('click', () => {
-    interactionMessage.style.opacity = 1;
-    setTimeout(() => {
-      interactionMessage.style.opacity = 0;
-    }, 2500);
-  });
-
-  mainText.addEventListener('touchstart', () => {
-    interactionMessage.style.opacity = 1;
-    setTimeout(() => {
-      interactionMessage.style.opacity = 0;
-    }, 3500);
-  });
-
-  window.addEventListener('load', () => {
-    backgroundMusic.play().catch(e => {
-      console.log("Reprodução automática de áudio bloqueada. O usuário precisa interagir com a página para a música tocar.", e);
-    });
-  });
+window.addEventListener('load', () => {
+  backgroundMusic.play().catch(()=>{});
+});
 </script>
-
 </body>
 </html>
