@@ -109,13 +109,32 @@ const clickEffectContainer = document.getElementById('clickEffectContainer');
 let clickParticles = [];
 
 // Lista de elogios
-const praiseWords = ["Magnífica","Radiante","Deslumbrante","Encantadora","Brilhante","Estrela","Sua","Cativante","Incrível","Perfeita","Amável","Doce","Gentil","Inteligente","Dedicada","Única","Fascinante","Preciosa","Inspiradora","Sonho","Maravilhosa","Querida","Especial","Luz","Sorriso","Cachos","Dourados","Morena","Beleza","Alma","Calma","Meiga","Viva","Real","Paz","Minha","Tesouro","Paixão","Desejo","Coração","Sensível","Graciosa","Pura","Verdadeira","Alegria","Simples","Linda","Divertida","Harmonia","Gostosa","Deliciosa","Amor","Completa","Espetacular","Dona do meu olhar","Amor da minha vida","Irresistível","Adorável","Vibrante","Luminosa","Confiante","Misteriosa","Carinhosa"];
+const praiseWords =[
+"Magnífica","Radiante","Deslumbrante",
+  "Encantadora","Brilhante","Estrela",
+  "Sua","Cativante","Incrível","Perfeita",
+  "Amável","Doce","Gentil","Inteligente","Dedicada",
+  "Única","Fascinante","Preciosa","Inspiradora","Sonho",
+  "Maravilhosa","Querida","Especial","Luz","Sorriso","Cachos",
+  "Dourados","Morena","Beleza","Alma","Calma","Meiga","Viva",
+  "Real","Paz","Minha","Tesouro","Paixão","Desejo","Coração","Sensível",
+  "Graciosa","Pura","Verdadeira","Alegria","Simples","Linda","Divertida",
+  "Harmonia","Gostosa","Deliciosa","Amor","Completa","Espetacular","Dona do meu olhar",
+  "Amor da minha vida","Irresistível","Adorável","Vibrante","Luminosa","Confiante","Misteriosa","Carinhosa"];
 
 // Mensagens românticas
 const backgroundRomanticMessages = [
-  "Meu amor por você é puro!","Você é a estrela mais linda!","Minha inspiração!","Sua presença me encanta!","Nosso amor é mágico!","Sorriso que me desarma!","Você é perfeita!","Um presente para mim!","Minha joia rara!","Com você sou mais feliz!","Sua alma é um jardim!","Cabelos de anjo!","Seus olhos me hipnotizam!"
+  "Meu amor por você é puro!",
+  "Você é a estrela mais linda!",
+  "Minha inspiração!",
+  "Sua presença me encanta!",
+  "Nosso amor é mágico!",
+  "Sorriso que me desarma!",
+  "Você é perfeita!","Um presente para mim!",
+  "Minha joia rara!",
+  "Com você sou mais feliz!","Sua alma é um jardim!",
+  "Cabelos de anjo!","Seus olhos me hipnotizam!"
 ];
-
 // Redimensiona canvas
 function resizeCanvas() {
   interactiveParticlesCanvas.width = window.innerWidth;
