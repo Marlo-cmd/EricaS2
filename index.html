@@ -9,36 +9,36 @@
   /* CSS básico para o layout e animações */
 
   body, html {
-    argin: 0; padding: 0; height: 100%; overflow: hidden;
+  margin: 0; padding: 0; height: 100%; overflow: hidden;
   background: #000000; /* fundo preto */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
-  color: #ff6699; /* cor padrão*/
-  }
+  color: #ff6699; /* cor padrão dos textos para contraste */
+}
 
-  #interactiveParticles {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
+.background-floating-heart {
+  color: #ff4d94; /* rosa mais forte */
+}
 
-  #backgroundHeartContainer {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
+.sparkle-particle {
+  background: #ff80bf; /* rosa claro */
+}
 
-  .background-floating-heart {
-    position: absolute;
-    color: #ff8db9;
-    animation: floatUp 7s linear forwards;
-    user-select: none;
-  }
+.background-text-rain {
+  color: #ffffff; /* rosa suave para o texto da chuva */
+}
+
+#mainText {
+  color: #ff4d94; /* rosa forte no texto principal */
+}
+
+#interactionMessage {
+  color: #ff66b2; /* rosa para a mensagem */
+}
+
+.click-effect-word {
+  color: #ff66b2; /* rosa para as palavras de elogio */
+}
 
   @keyframes floatUp {
     0% { transform: translateX(0) translateY(0); opacity: 1; }
