@@ -9,6 +9,10 @@
   <style>
     /* Apenas o texto "Clique aqui ❤" */
 #mainText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
   font-family: 'Pacifico', cursive;
   color: #ff66b2;
   text-shadow: 
@@ -17,7 +21,6 @@
     0 0 20px #ff4d94,
     0 0 40px #ff1a75;
   animation: pulseGlow 2s infinite;
-}
 
 @keyframes pulseGlow {
   0% {
@@ -188,9 +191,8 @@ body, html {
   const clickEffectContainer = document.getElementById('clickEffectContainer');
 
   let clickParticles = [];
-
-  // As listas praiseWords e backgroundRomanticMessages aqui (copie do seu código original)...
-
+// Lista de palavras elogiosas que aparecem ao clicar/tocar em qualquer lugar da tela
+// Adicione ou remova palavras conforme desejar. Tente ter pelo menos 50 elogios únicos.
   const praiseWords = [
     "Magnífica", "Radiante", "Deslumbrante", "Encantadora", "Brilhante",
     "Estrela", "Sua", "Cativante", "Incrível", "Perfeita",
@@ -203,7 +205,8 @@ body, html {
     "Sensível", "Graciosa", "Pura", "Verdadeira", "Alegria",
     "Simples", "Linda", "Divertida", "Harmonia", "Gostosa", "Deliciosa", "Amor",
     "Completa", "Espetacular", "Dona do meu olhar", "Amor da minha vida", "Irresistível",
-    "Adorável", "Vibrante", "Luminosa", "Confiante", "Misteriosa", "Carinhosa"
+    "Adorável", "Vibrante", "Luminosa", "Confiante", "Misteriosa", "Carinhosa", "Gatinha", "Eri <3",
+    "O teu riso é apaixonante","Já te disse como eu te amo?","Deusa","Fofa",
   ];
 
   const backgroundRomanticMessages = [
@@ -220,6 +223,15 @@ body, html {
     "Sua alma é um jardim!",
     "Cabelos de anjo!",
     "Seus olhos me hipnotizam!"
+    "Você é a minha maior inspiração para ser uma pessoa melhor a cada dia. ❤️"
+    "Você vence todas as dificuldades porque não tem medo de lutar. A sua determinação é o meu combustível."
+    "E, nos dias difíceis, você é a razão para eu não desistir."
+    "Desde o primeiro dia que eu te conheci eu soube que você era a pessoa certa"
+    "Você é a mais bela flor desse jardim! 💐"
+    "A tua beleza me impressiona cada dia mais. ❤️"
+    "Olha essa mulher! É a dona do meu coração ❤️"
+    "Eu adoro você exatamente do jeitinho que você é. 💝"
+    "Você é a pessoa que eu esperei a minha vida toda. 😍"
   ];
 
   // Funções do seu JS aqui (resizeCanvas, createClickParticles, animateClickParticles, etc.)
